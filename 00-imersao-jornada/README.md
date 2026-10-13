@@ -131,9 +131,8 @@ Siga as instruções completas em: **[Aula 1 - SQL & Analytics](./aulas/aula-01-
 
 **Resumo rápido:**
 1. Importe os CSVs em um banco SQL (SQLite ou PostgreSQL)
-2. Execute os 21 exemplos SQL em ordem
-3. Pratique com os exercícios
-4. Responda perguntas de negócio
+2. Execute os 9 exemplos SQL em ordem (`exemplo-01` a `exemplo-09`)
+3. Responda as perguntas de negócio
 
 ---
 
@@ -221,7 +220,7 @@ id_produto, nome_concorrente, preco_concorrente, data_coleta
 
 **Total de registros:** 50 clientes
 
-**Nota:** A segmentação de clientes (VIP, TOP_TIER, REGULAR) deve ser criada usando CASE WHEN baseado no comportamento de compra. Veja o exercício `aulas/aula-01-sql/exercicios/exercicio-case-when-clientes.sql` para aprender como criar essa segmentação.
+**Nota:** A segmentação de clientes (VIP, TOP_TIER, REGULAR) deve ser criada usando CASE WHEN baseado no comportamento de compra. Veja `aulas/aula-01-sql/exemplo-07-case-when.sql` para aprender `CASE WHEN` e o modelo dbt `aulas/aula-03-dbt/models/gold/customer_success/clientes_segmentacao.sql` para a segmentação completa.
 
 ---
 
@@ -358,11 +357,9 @@ Projeto-Jornada-De-Dados/
 ├── generate_datasets.py          # Gerador de dados sintéticos
 ├── aulas/
 │   ├── aula-01-sql/              # Dia 1: SQL & Analytics
-│   │   ├── queries/               # 21 exemplos SQL
-│   │   ├── exercicios/            # Exercícios práticos
+│   │   ├── exemplo-01 … exemplo-09-*.sql  # 9 exemplos SQL progressivos
 │   │   ├── README.md             # Guia completo do Dia 1
-│   │   ├── KPIS.md               # KPIs e perguntas de negócio
-│   │   └── ESTRUTURA_DADOS.md    # Documentação dos datasets
+│   │   └── KPIS.md               # KPIs e perguntas de negócio
 │   ├── aula-02-python/           # Dia 2: Python & Ingestão (em breve)
 │   ├── aula-03-engenharia/       # Dia 3: Engenharia de Dados (em breve)
 │   └── aula-04-claude-code/      # Dia 4: Claude Code & Python
@@ -459,9 +456,8 @@ chmod 755 data
 
 1. **Gere os datasets:** Execute `python generate_datasets.py`
 2. **Comece o Dia 1:** Siga as instruções em [Aula 1 - SQL & Analytics](./aulas/aula-01-sql/README.md)
-3. **Execute os exemplos:** 21 exemplos SQL em ordem progressiva
-4. **Pratique:** Faça os exercícios práticos
-5. **Avance para Dia 2:** Python & Ingestão de Dados
+3. **Execute os exemplos:** 9 exemplos SQL em ordem progressiva
+4. **Avance para Dia 2:** Python & Ingestão de Dados
 
 ---
 
@@ -490,8 +486,6 @@ Cada query, cada script, cada pipeline que você construir deve responder uma pe
 
 - **[Aula 1 - SQL & Analytics](./aulas/aula-01-sql/README.md)** - Guia completo do primeiro dia
 - **[KPIs da Aula 1](./aulas/aula-01-sql/KPIS.md)** - Lista completa de KPIs e perguntas
-- **[Estrutura dos Dados](./aulas/aula-01-sql/ESTRUTURA_DADOS.md)** - Documentação detalhada
-- **[Queries de Exemplo](./aulas/aula-01-sql/queries/README.md)** - 21 exemplos SQL com explicações
 
 ---
 

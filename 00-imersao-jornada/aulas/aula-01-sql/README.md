@@ -37,7 +37,7 @@ ORDER BY ordenação               -- opcional
 LIMIT    quantas_linhas          -- opcional
 ```
 
-Você não precisa decorar — vamos construir isso peça por peça nos 8 exemplos.
+Você não precisa decorar — vamos construir isso peça por peça nos 9 exemplos.
 
 ---
 
@@ -105,14 +105,15 @@ vendas.id_cliente   ──→  clientes.id_cliente
 
 ## 🎯 Roteiro de aprendizado
 
-Os **8 exemplos** seguem uma progressão onde cada um usa conceitos dos anteriores:
+Os **9 exemplos** seguem uma progressão onde cada um usa conceitos dos anteriores:
 
 ```
   Fundamentos             Agregação                Análise
-  (01 → 02 → 03)          (04 → 05)                (06 → 07 → 08)
+  (01 → 02 → 03)          (04 → 05)                (06 → 07 → 08 → 09)
 
   Ver, ordenar,           Calcular métricas,       Juntar tabelas,
-  filtrar dados           agrupar por dimensão     classificar, ranking
+  filtrar dados           agrupar por dimensão     classificar, ranking,
+                                                   achar quem ficou de fora
 ```
 
 ### 🔄 Conexão SQL → dbt (Arquitetura Medalhão)
@@ -123,11 +124,11 @@ Você vai reencontrar tudo isso na **aula-03-dbt**, só que organizado em camada
 |:----------:|-----------|:-------------------------:|
 | 🥉 **Bronze** | Views das tabelas raw | 01 |
 | 🥈 **Silver** | Limpeza, campos calculados, JOINs, classificações | 03, 04, 06, 07 |
-| 🥇 **Gold** | KPIs, agregações, rankings, percentuais | 05, 06, 08 |
+| 🥇 **Gold** | KPIs, agregações, rankings, percentuais | 05, 06, 08, 09 |
 
 ---
 
-## 📝 Os 8 exemplos
+## 📝 Os 9 exemplos
 
 ---
 
@@ -266,6 +267,26 @@ Os 3 superpoderes:
 
 ---
 
+### 09 — LEFT JOIN: "quem ficou de fora?"
+
+📄 `exemplo-09-left-join.sql`
+
+**Intuição:** o `INNER JOIN` do exemplo 06 só mostra quem tem par nas **duas** tabelas. Produto que nunca vendeu? Some do resultado sem avisar. O `LEFT JOIN` mantém **todas** as linhas da tabela da esquerda. Quando não há par, as colunas da direita vêm como `NULL`, e é justamente esse `NULL` que revela quem ficou de fora.
+
+```
+produtos (P001, P002, P003)  ─LEFT JOIN─  vendas (só de P001 e P002)
+                                     ↓
+                    P003 aparece com venda = NULL → "nunca vendeu"
+```
+
+| | |
+|---|---|
+| **O que você aprende** | `INNER JOIN` x `LEFT JOIN` · padrão `LEFT JOIN` + `IS NULL` para achar quem não tem par · vendas órfãs (qualidade de dados) · `COALESCE` para trocar `NULL` por 0 · `COUNT(coluna)` x `COUNT(*)` · pegadinha do filtro no `WHERE` x no `ON` |
+| **Pergunta de negócio** | Quais produtos nunca venderam? Algum cliente nunca comprou? Existem vendas de produtos fora do catálogo? |
+| **Conexão dbt** | 🥇 `precos_competitividade` (`LEFT JOIN` + `COALESCE(receita_total, 0)`) · `clientes_segmentacao` |
+
+---
+
 ## 🎁 Bônus: e quando a query fica grande?
 
 Você vai chegar num ponto em que a query tem `JOIN`, `GROUP BY`, `CASE`, window... tudo junto. Como organizar isso?
@@ -291,6 +312,7 @@ Existem **3 caminhos** para quebrar queries grandes em pedaços:
 | 06 | `JOIN` | Juntar tabelas + análises por categoria/estado | 🥈🥇 |
 | 07 | `CASE WHEN` | Classificar em faixas/segmentos | 🥈 |
 | 08 | Window Functions | Comparar com período anterior, ranking, % | 🥇 |
+| 09 | `LEFT JOIN` + `COALESCE` | Achar quem não tem par, incluir zeros | 🥇 |
 
 ---
 
@@ -312,12 +334,15 @@ Existem **3 caminhos** para quebrar queries grandes em pedaços:
 14. Estamos crescendo mês a mês? *(08)*
 15. Qual o ranking de produtos por receita? *(08)*
 16. Qual o percentual de receita por canal? *(08)*
+17. Quais produtos nunca venderam? *(09)*
+18. Algum cliente nunca comprou? *(09)*
+19. Existem vendas de produtos fora do catálogo? *(09)*
 
 ---
 
 ## ✅ Checklist de aprendizado
 
-Depois dos 8 exemplos, você deve conseguir:
+Depois dos 9 exemplos, você deve conseguir:
 
 - [ ] Ler dados com `SELECT` / `LIMIT`
 - [ ] Ordenar com `ORDER BY`
@@ -327,6 +352,7 @@ Depois dos 8 exemplos, você deve conseguir:
 - [ ] Juntar tabelas com `INNER JOIN` (incluindo triple JOIN)
 - [ ] Classificar com `CASE WHEN`
 - [ ] Usar window functions (`LAG`, `ROW_NUMBER`, `SUM OVER`)
+- [ ] Usar `LEFT JOIN` + `IS NULL` e `COALESCE` para não perder linhas
 - [ ] Reconhecer o paralelo SQL → dbt (bronze, silver, gold)
 - [ ] *(quarta-feira)* Saber escolher entre Subquery, CTE e tabela/view
 
@@ -342,4 +368,4 @@ Depois dos 8 exemplos, você deve conseguir:
 
 ---
 
-**Total: 8 exemplos progressivos · 16 perguntas de negócio · tudo conectado com dbt** 🚀
+**Total: 9 exemplos progressivos · 19 perguntas de negócio · tudo conectado com dbt** 🚀
